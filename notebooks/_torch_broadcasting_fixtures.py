@@ -329,7 +329,7 @@ CASES = {'ex001': {'expression': 'a + b',
            'expected_compatible': True,
            'mode': 'result'},
  'ex055': {'expression': 'scores.masked_fill(~mask, -1e9)',
-           'intermediates': {},
+           'intermediates': {'inverted_mask': '~mask'},
            'audit': ['scores', 'mask'],
            'value_exprs': {},
            'expected_compatible': True,
@@ -399,6 +399,43 @@ CASES = {'ex001': {'expression': 'a + b',
            'expected_compatible': True,
            'mode': 'capstone'}}
 
+PRE_OPERATOR_GROUPS = {'ex009': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex010': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex011': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex012': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex013': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex014': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex015': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex016': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex017': [('matrix_before_op', 'matrix'), ('row_before_op', 'row')],
+ 'ex018': [('matrix_before_op', 'matrix'), ('column_before_op', 'column')],
+ 'ex019': [('column_before_op', 'column'), ('row_before_op', 'row')],
+ 'ex020': [('rows_col_before_op', 'rows_col'), ('grid_before_op', 'grid')],
+ 'ex021': [('cols_row_before_op', 'cols_row'), ('grid_before_op', 'grid')],
+ 'ex022': [('prepared_before_op', 'prepared'), ('grid_before_op', 'grid')],
+ 'ex023': [('prepared_before_op', 'prepared'), ('grid_before_op', 'grid')],
+ 'ex024': [('channel_view_before_op', 'channel_view'), ('images_before_op', 'images')],
+ 'ex025': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex026': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex027': [('matrix_before_op', 'matrix'), ('vector_before_op', 'vector')],
+ 'ex028': [('matrix_before_op', 'matrix'), ('scalar_before_op', 'scalar')],
+ 'ex029': [('tokens_before_op', 'tokens'), ('features_before_op', 'features')],
+ 'ex030': [('tokens_before_op', 'tokens'), ('plane_before_op', 'plane')],
+ 'ex031': [('column_before_op', 'column'), ('row_before_op', 'row')],
+ 'ex032': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex033': [('a_before_op', 'a'), ('b_before_op', 'b')],
+ 'ex034': [('scalar_before_op', 'scalar'), ('vector_before_op', 'vector')],
+ 'ex035': [('matrix_before_op', 'matrix'), ('scalar_before_op', 'scalar')],
+ 'ex036': [('matrix_before_op', 'matrix'), ('vector_before_op', 'vector')],
+ 'ex037': [('matrix_before_op', 'matrix'), ('row_before_op', 'row')],
+ 'ex038': [('matrix_before_op', 'matrix'), ('column_before_op', 'column')],
+ 'ex039': [('column_before_op', 'column'), ('row_before_op', 'row')],
+ 'ex040': [('tokens_before_op', 'tokens'), ('features_before_op', 'features')],
+ 'ex052': [('mask_view_before_op', 'mask_view'), ('embeddings_before_op', 'embeddings')],
+ 'ex055': [('scores_before_op', 'scores'),
+           ('inverted_mask_before_op', 'inverted_mask')],
+ 'ex056': [('x_rows_before_op', 'x_rows'), ('y_rows_before_op', 'y_rows')]}
+
 
 def _clone(value):
     if isinstance(value, torch.Tensor):
@@ -463,6 +500,13 @@ def build_reference(key, supplied):
     scope["out"] = output
     reference["out"] = _clone(output)
     reference["out_shape"] = tuple(output.shape)
+
+    if key in PRE_OPERATOR_GROUPS:
+        group = PRE_OPERATOR_GROUPS[key]
+        operator_values = [scope[scope_name] for _, scope_name in group]
+        operator_ready = torch.broadcast_tensors(*operator_values)
+        for (field, _), value in zip(group, operator_ready, strict=True):
+            reference[field] = _clone(value)
 
     if case["mode"] in {"aligned", "expanded"}:
         rank = output.ndim
