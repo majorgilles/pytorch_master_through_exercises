@@ -1,0 +1,13 @@
+[project]
+name = "pytorch_master_through_exercises"
+version = "0.1.0"
+description = "Progressive coding and mental-exercise notebooks for PyTorch mastery"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "jupyterlab>=4.0",
+    "torch>=2.0",
+]
+
+[tool.ruff]
+line-length = 100
