@@ -64,103 +64,12 @@ For each exercise:
 
 When stuck, ask for one hint about the current reasoning step rather than requesting the complete answer.
 
-## Creating an exercise notebook for a new subject
-
-Use this process for future topics such as tensor views, reductions, matrix multiplication, autograd, convolution shapes, attention, or numerical stability.
-
-### 1. Define the mastery target
-
-Write one sentence describing what repeated coding and mental practice should make automatic. Break the topic into a progression from concrete one-operation cases to realistic machine-learning patterns and capstones.
-
-A useful progression is:
-
-1. vocabulary and rank-zero/rank-one foundations;
-2. one concept at a time with tiny visible tensors;
-3. shape prediction before execution;
-4. common misconceptions and deliberately invalid cases;
-5. higher-rank combinations;
-6. storage or autograd semantics when relevant;
-7. realistic PyTorch patterns;
-8. integrated capstones.
-
-### 2. Follow the four-cell exercise contract
-
-Give every exercise stable IDs and place these cells in order:
-
-1. `exercise-NNN-prompt` — Markdown describing purpose, visible inputs, task, ingredients, required outputs, and next concept.
-2. `exercise-NNN-fixture` — supplied input construction and private-reference registration; it must not print shape or value answers.
-3. `exercise-NNN-answer` — comments and blank space for learner code only.
-4. `exercise-NNN-test` — checks required variables without embedding expected tuples or tensors in visible test source.
-
-Keep central mathematical relationships in standalone display LaTeX, define every symbol in prose, and keep explanations close to the code they describe.
-
-### 3. Make tests useful without giving answers away
-
-Tests should check type, shape, dtype, and values while reporting only actionable feedback such as “reconsider right alignment.” Do not write visible assertions like:
-
-```python
-_check_shape("result_shape", (2, 3))
-```
-
-Instead, derive expected results at runtime in a generic helper or a private support module such as `_topic_fixtures.py`, then let the test refer to a key and field.
-
-Visible fixtures should expose the learner’s inputs and forward operation, but only expected answers should remain private.
-
-### 4. Create the working notebook
-
-Name it:
-
-```text
-notebooks/<subject>_exercises.ipynb
-```
-
-Include:
-
-- a title and usage instructions;
-- a mental checklist;
-- a course map with exercise ranges;
-- setup and private test helpers;
-- progressive prompt/fixture/answer/test groups;
-- a completion standard and official references.
-
-### 5. Generate the virgin pair
-
-First remove accidental scratch cells that should not be part of the reusable curriculum. Then run:
-
-```bash
-python scripts/create_virgin.py notebooks/<subject>_exercises.ipynb
-```
-
-The script creates:
-
-```text
-notebooks/<subject>_exercises_virgin.ipynb
-```
-
-It blanks cells whose IDs match `exercise-NNN-answer`, clears all code-cell outputs and execution counts, and verifies that no executable answer code remains. Custom notebooks should therefore preserve the standard answer-cell IDs.
-
-### 6. Validate before adding the subject
-
-Check all of the following:
-
-- notebook JSON parses successfully;
-- every cell ID is unique;
-- every code cell compiles;
-- setup and all visible fixtures run sequentially;
-- private references cover every required test field;
-- simulated correct answers pass every test;
-- virgin answer cells contain no executable statements;
-- virgin notebooks contain no saved outputs;
-- tests reveal no expected shape tuples or answer tensors;
-- documentation matches executable operations and sample counts.
-
-Finally, add the new working/virgin pair to the table in this README.
-
 ## Repository layout
 
 ```text
 .
 ├── README.md
+├── AGENTS.md
 ├── pyproject.toml
 ├── notebooks/
 │   ├── *_exercises.ipynb
