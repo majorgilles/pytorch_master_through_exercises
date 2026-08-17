@@ -11,7 +11,7 @@ The goal of this repository is to gain experience through **coding and mental ex
 | Subject | Working notebook | Clean retry notebook | Scope |
 |---|---|---|---:|
 | Tensor indexing | [`torch_indexing_exercises.ipynb`](notebooks/torch_indexing_exercises.ipynb) | [`torch_indexing_exercises_virgin.ipynb`](notebooks/torch_indexing_exercises_virgin.ipynb) | 110 exercises |
-| Broadcasting | [`torch_broadcasting_exercises.ipynb`](notebooks/torch_broadcasting_exercises.ipynb) | [`torch_broadcasting_exercises_virgin.ipynb`](notebooks/torch_broadcasting_exercises_virgin.ipynb) | 110 exercises |
+| Broadcasting | [`torch_broadcasting_exercises.ipynb`](notebooks/torch_broadcasting_exercises.ipynb) | [`torch_broadcasting_exercises_virgin.ipynb`](notebooks/torch_broadcasting_exercises_virgin.ipynb) | 64 exercises |
 | Tensor shapes and manual backpropagation | [`tensor_backprop_exercises.ipynb`](notebooks/tensor_backprop_exercises.ipynb) | [`tensor_backprop_exercises_virgin.ipynb`](notebooks/tensor_backprop_exercises_virgin.ipynb) | 155 exercises |
 
 Files beginning with `_` in `notebooks/` provide private runtime references for tests. Keep them beside the corresponding notebooks.
@@ -55,7 +55,7 @@ Then open a notebook and run its setup/helper cell before Exercise 001.
 For each exercise:
 
 1. Read the purpose and name the meaning of every axis.
-2. Predict required shapes, aligned shapes, values, or gradients on paper or in the answer cell.
+2. Predict only the shapes, values, alignment details, or gradients requested by the current exercise.
 3. Narrate the operation mentally before executing it.
 4. Write the smallest clear PyTorch expression.
 5. Run the supplied private-reference test.
