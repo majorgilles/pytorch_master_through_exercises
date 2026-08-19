@@ -11,7 +11,7 @@ The goal of this repository is to gain experience through **coding and mental ex
 | Subject | Working notebook | Clean retry notebook | Scope |
 |---|---|---|---:|
 | Tensor indexing | [`torch_indexing_exercises.ipynb`](notebooks/torch_indexing_exercises.ipynb) | [`torch_indexing_exercises_virgin.ipynb`](notebooks/torch_indexing_exercises_virgin.ipynb) | 110 exercises |
-| Broadcasting | [`torch_broadcasting_exercises.ipynb`](notebooks/torch_broadcasting_exercises.ipynb) | [`torch_broadcasting_exercises_virgin.ipynb`](notebooks/torch_broadcasting_exercises_virgin.ipynb) | 52 exercises |
+| Broadcasting | [`torch_broadcasting_exercises.ipynb`](notebooks/torch_broadcasting_exercises.ipynb) | [`torch_broadcasting_exercises_virgin.ipynb`](notebooks/torch_broadcasting_exercises_virgin.ipynb) | 45 exercises |
 | Tensor shapes and manual backpropagation | [`tensor_backprop_exercises.ipynb`](notebooks/tensor_backprop_exercises.ipynb) | [`tensor_backprop_exercises_virgin.ipynb`](notebooks/tensor_backprop_exercises_virgin.ipynb) | 155 exercises |
 
 Files beginning with `_` in `notebooks/` provide private runtime references for tests. Keep them beside the corresponding notebooks.
